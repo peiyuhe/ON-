@@ -1,5 +1,6 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.dto.LearningReportDTO;
 import com.example.springboot.dto.TranslateReportRequestDTO;
 import com.example.springboot.model.LearningReports;
 import com.example.springboot.service.LearningReportService;
@@ -21,26 +22,27 @@ public class LearningReportController {
     private LearningReportService learningReportService;
 
     @PostMapping("/generate-recent-report")
-    public ResponseEntity<String> generateRecentLearningReport(@RequestParam Long studentId) throws IOException {
-        String report = learningReportService.generateLearningReport(studentId);
-        return ResponseEntity.ok(report);
+    public ResponseEntity<LearningReportDTO> generateRecentLearningReport(@RequestParam Long studentId) throws IOException {
+        LearningReportDTO reportDTO = learningReportService.generateLearningReport(studentId);
+        return ResponseEntity.ok(reportDTO);
     }
+
     @PostMapping("/generate-by-course")
-    public ResponseEntity<String> generateReportByCourse(@RequestBody Map<String, Long> requestBody) throws IOException {
+    public ResponseEntity<LearningReportDTO> generateReportByCourse(@RequestBody Map<String, Long> requestBody) throws IOException {
         Long studentId = requestBody.get("studentId");
         Long courseId = requestBody.get("courseId");
 
-        String report = learningReportService.generateCourseLearningReport(studentId, courseId);
-        return ResponseEntity.ok(report);
+        LearningReportDTO reportDTO = learningReportService.generateCourseLearningReport(studentId, courseId);
+        return ResponseEntity.ok(reportDTO);
     }
 
     @PostMapping("/generate-by-exercise")
-    public ResponseEntity<String> generateReportByExercise(@RequestBody Map<String, Long> requestBody) throws IOException {
+    public ResponseEntity<LearningReportDTO> generateReportByExercise(@RequestBody Map<String, Long> requestBody) throws IOException {
         Long studentId = requestBody.get("studentId");
         Long exerciseId = requestBody.get("exerciseId");
 
-        String report = learningReportService.generateExerciseLearningReport(studentId, exerciseId);
-        return ResponseEntity.ok(report);
+        LearningReportDTO reportDTO = learningReportService.generateExerciseLearningReport(studentId, exerciseId);
+        return ResponseEntity.ok(reportDTO);
     }
 
 

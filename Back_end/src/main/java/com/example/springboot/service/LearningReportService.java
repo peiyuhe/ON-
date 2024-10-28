@@ -1,5 +1,6 @@
 package com.example.springboot.service;
 
+import com.example.springboot.dto.LearningReportDTO;
 import com.example.springboot.model.*;
 import com.example.springboot.repository.*;
 import jakarta.transaction.Transactional;
@@ -59,7 +60,7 @@ public class LearningReportService {
 
 
     @Transactional
-    public String generateLearningReport(Long studentId) throws IOException {
+    public LearningReportDTO generateLearningReport(Long studentId) throws IOException {
 
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
@@ -94,11 +95,12 @@ public class LearningReportService {
         learningReport.setGeneratedAt(LocalDateTime.now());
         learningReportsRepository.save(learningReport);
 
-        return aiGeneratedReport;
+//        return aiGeneratedReport;
+        return new LearningReportDTO(learningReport.getReportId(), aiGeneratedReport);
     }
 
     @Transactional
-    public String generateCourseLearningReport(Long studentId, Long courseId) throws IOException {
+    public LearningReportDTO generateCourseLearningReport(Long studentId, Long courseId) throws IOException {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
         List<Submission> latestSubmissions = submissionRepository.findLatestSubmissionsByStudentAndCourse(studentId, courseId);
@@ -136,11 +138,12 @@ public class LearningReportService {
         learningReport.setGeneratedAt(LocalDateTime.now());
         learningReportsRepository.save(learningReport);
 
-        return aiGeneratedReport;
+//        return aiGeneratedReport;
+        return new LearningReportDTO(learningReport.getReportId(), aiGeneratedReport);
     }
 
     @Transactional
-    public String generateExerciseLearningReport(Long studentId, Long exerciseId) throws IOException {
+    public LearningReportDTO generateExerciseLearningReport(Long studentId, Long exerciseId) throws IOException {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
         Exercise exercise = exerciseRepository.findById(exerciseId)
@@ -172,7 +175,8 @@ public class LearningReportService {
         learningReport.setGeneratedAt(LocalDateTime.now());
         learningReportsRepository.save(learningReport);
 
-        return aiGeneratedReport;
+//        return aiGeneratedReport;
+        return new LearningReportDTO(learningReport.getReportId(), aiGeneratedReport);
     }
 
     private String generateReportFromSubmissions(List<Submission> submissions) throws IOException {
