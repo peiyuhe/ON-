@@ -50,7 +50,7 @@ public class UserService {
     public String updateSecurityQuestion(Long userId, SecuritySetupDTO securitySetupDTO) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
+        System.out.println(securitySetupDTO.getSecurityQuestion() + "");
         user.setSecurityQuestion(securitySetupDTO.getSecurityQuestion());
         user.setSecurityAnswer(securitySetupDTO.getSecurityAnswer());
         userRepository.save(user);
@@ -89,12 +89,16 @@ public class UserService {
             throw new IllegalArgumentException("Only JPEG, JPG, and PNG image types are allowed.");
         }
         Path uploadDirPath = Paths.get( AVATAR_DIRECTORY, "usr" + userId.toString());
-
+        System.out.println(uploadDirPath);
         Files.createDirectories(uploadDirPath );
-
+        if (Files.exists(uploadDirPath)) {
+            System.out.println("Directory successfully created at: " + uploadDirPath.toAbsolutePath());
+        } else {
+            System.err.println("Failed to create directory.");
+        }
         String fileName = file.getOriginalFilename();
         Path filePath = uploadDirPath .resolve(fileName);
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        Files.write(filePath, file.getBytes());
 
         String avatarUrl = "/avatar/usr" + userId + "/" + fileName;
         user.setAvatar(avatarUrl);

@@ -67,7 +67,7 @@ public class StudentService {
             }
             if (birthDayStr != null) {
                 try {
-                    LocalDateTime birthDay = LocalDateTime.parse(birthDayStr);
+                    LocalDate birthDay = LocalDate.parse(birthDayStr);
                     user.setBirthDay(LocalDate.from(birthDay));
                 } catch (DateTimeParseException e) {
                     throw new RuntimeException("Invalid birthDay format");

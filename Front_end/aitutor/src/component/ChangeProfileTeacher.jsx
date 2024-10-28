@@ -66,6 +66,7 @@ const ChangeProfileTeacher = () => {
 
   const handleConfirmAvatar = async () => {
     if (!selectedAvatar) {
+      
       message.error('Please select an avatar to upload.');
       return;
     }
@@ -73,9 +74,9 @@ const ChangeProfileTeacher = () => {
     
     const avatarURL = URL.createObjectURL(selectedAvatar);
     setUserData((prevData) => ({ ...prevData, avatar: avatarURL }));
-    console.log(userData.userId);
+    console.log(userData.user_id);
     console.log(selectedAvatar);
-    await uploadAvatar(userData.userId, selectedAvatar);
+    await uploadAvatar(userData.user_id, selectedAvatar);
     message.success('Avatar uploaded successfully!');
     setAvatarModalVisible(false);
   };
@@ -86,25 +87,24 @@ const ChangeProfileTeacher = () => {
       await updateTeacher(
         teacherId,
         {
-          birthDay: values.birthDay,
+          birthDay: values.birth_day.format('YYYY-MM-DD') || null,
           email: values.email,
           facility: values.facility,
           gender: values.gender,
           phone: values.phone,
           username: values.username,
-          avatar: values.avatar,
 
         }
       );
-
+      
       const securitySetupDTO = {
         username: values.username,
         securityQuestion: values.security_question,
         securityAnswer: values.security_answer
       };
-
+      console.log(userData);
       if (hasSecurityQuestion) {
-        await updateSecurityQuestion(teacherId, securitySetupDTO);
+        await updateSecurityQuestion(userData.user_id, securitySetupDTO);
       } else {
         await setSecurityQuestion(securitySetupDTO);
       }

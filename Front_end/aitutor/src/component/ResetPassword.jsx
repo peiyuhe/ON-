@@ -53,7 +53,7 @@ const ResetPasswordComponent = ({ setFormRef }) => {
 
       // Call API to reset password
       const resetResponse = await resetPassword(PasswordResetDTO);
-
+      console.log(resetResponse.data);
       if (resetResponse.data === "User not found") {
         message.error('User not found!');
       } else if (resetResponse.data === "Incorrect security answer") {

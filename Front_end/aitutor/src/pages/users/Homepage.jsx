@@ -19,6 +19,7 @@ const Homepage = () => {
   const [username, setName] = useState("");
   const [avatar, setAvatar] = useState("");
   const navigate = useNavigate();
+  const baseUrl = 'http://localhost:8080';
 
   useEffect(() => {
     const storedRole = localStorage.getItem('role');
@@ -81,7 +82,7 @@ const Homepage = () => {
             <div className="user-info">
               <Card className="user-info-card">
                 <div className="avatar">
-                <img src={avatar || 'https://via.placeholder.com/50'}  className="avatar-image" />
+                <img src={`${baseUrl}${avatar}` || 'https://via.placeholder.com/50'}  className="avatar-image" />
                 </div>
                 <h3>{username}</h3>
                 <p>{role}</p>

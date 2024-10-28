@@ -43,7 +43,7 @@ public class StudentController {
 
 
             Map<String, Object> studentData = new HashMap<>();
-            studentData.put("user_id", student.getStudentId());
+            studentData.put("user_id", user.getUser_Id());
             studentData.put("student_id", student.getStudentId());
             studentData.put("facility", student.getFacility());
             studentData.put("major", student.getMajor());

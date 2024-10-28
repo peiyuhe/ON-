@@ -9,7 +9,7 @@ const { Meta } = Card;
 
 const UserProfile = () => {
   const navigate = useNavigate(); 
-
+  const baseUrl = 'http://localhost:8080';
 
   const [user, setUser] = useState({
     username: '',
@@ -59,7 +59,7 @@ const UserProfile = () => {
       <Row gutter={[16, 16]}>
         <Col span={8}>
           {/* <img src={user.avatar || 'https://via.placeholder.com/50'} alt="User Avatar" className="user-avatar" /> */}
-          <img src={user.avatar|| 'https://via.placeholder.com/50'} alt="User Avatar" className="user-avatar" />
+          <img src={`${baseUrl}${user.avatar}` || 'https://via.placeholder.com/50'} alt="User Avatar" className="user-avatar" />
         </Col>
         <Col span={8}>
           <div className="user-details">

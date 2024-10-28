@@ -60,8 +60,8 @@ const ChangeProfileStudent = () => {
 
     const avatarURL = URL.createObjectURL(selectedAvatar);
     setUserData((prevData) => ({ ...prevData, avatar: avatarURL })); 
-    console.log(userData.userId);
-    await uploadAvatar(userData.userId, selectedAvatar);
+    console.log(userData.user_id);
+    await uploadAvatar(userData.user_id, selectedAvatar);
     message.success('Avatar uploaded successfully!');
     setAvatarModalVisible(false); 
   };
@@ -69,19 +69,17 @@ const ChangeProfileStudent = () => {
   const handleFinish = async (values) => {
     setLoading(true);
     try {
-      console.log("this is detail");
-      console.log(form.getFieldsValue());
+      const formValues = form.getFieldsValue();
       await updateStudent(
         studentId,
         {
-          birthDay:form.birthDay,
-          email: form.email,
-          facility: form.facility,  
-          gender: form.gender,
-          major: form.major,    
-          phone: form.phone, 
-          username: form.username,
-          avatar: form.avatar,      
+          birthDay:formValues.birth_day.format('YYYY-MM-DD') || null,
+          email: formValues.email,
+          facility: formValues.facility,  
+          gender: formValues.gender,
+          major: formValues.major,    
+          phone: formValues.phone, 
+          username: formValues.username,  
           
         }
       );
@@ -91,9 +89,9 @@ const ChangeProfileStudent = () => {
         securityQuestion: values.security_question,
         securityAnswer: values.security_answer
       };
-
+      
       if (hasSecurityQuestion) {
-        await updateSecurityQuestion(studentId, securitySetupDTO);
+        await updateSecurityQuestion(userData.user_id, securitySetupDTO);
       } else {
         await setSecurityQuestion(securitySetupDTO);
       }

@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         //auth
                         .requestMatchers("/auth/register", "/auth/login").permitAll()
-                        .requestMatchers("/auth/reset-password").hasAnyAuthority("STUDENT", "TEACHER")
+                        .requestMatchers("/auth/reset-password").permitAll()
                         //user
                         .requestMatchers("/user/check-security/**").hasAnyAuthority("STUDENT", "TEACHER")
                         .requestMatchers("/user/set-security-question").hasAnyAuthority("STUDENT", "TEACHER")
@@ -120,6 +120,7 @@ public class SecurityConfig {
                         .requestMatchers("/files/submissions/{exerciseId}").hasAnyAuthority("TEACHER", "STUDENT")
                         .requestMatchers("/files/download").hasAnyAuthority("TEACHER", "STUDENT")
                         .requestMatchers("/files/**").permitAll()
+                        .requestMatchers("/avatar/**").permitAll()
 
                         .anyRequest().authenticated()
                 )
