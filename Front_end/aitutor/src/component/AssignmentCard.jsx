@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button, Typography, Space, Spin, message } from 'antd';
 import '../styles/AssignmentCard.css';
 import Pagination from './Pagination';
-import { getExercisebyCourseId, getExercise } from '../api';
-import {downloadFileByFilename} from '../downloadapi';
+import { getExercisebyCourseId } from '../api';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const { Meta } = Card;
@@ -14,21 +13,26 @@ const AssignmentCard = ({ studentId }) => {
   const navigate = useNavigate(); 
   const [assignments, setAssignments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [exercise, setExercise] = useState({});
   const [loading, setLoading] = useState(true);
   const pageSize = 4;
-  console.log("this is AssignmentCard studentId");
-  console.log(studentId);
+
   useEffect(() => {
     const fetchAssignments = async () => {
       try {
+        setLoading(true);
         const exercisesResponse = await getExercisebyCourseId(courseId);
-        // console.log(exercisesResponse);
         const exercises = exercisesResponse.data;
 
-        // console.log("Fetched Exercises for Course:", exercises);
+        // 处理 assignment 和 submissions
+        const assignmentsWithScores = exercises.map((exercise) => {
+          const submission = exercise.submissions[0]; 
+          return {
+            ...exercise,
+            score: submission ? submission.score : 'No Score', // 如果有成绩就显示成绩，没有则显示 'No Score'
+          };
+        });
 
-        setAssignments(exercises);
+        setAssignments(assignmentsWithScores);
       } catch (error) {
         console.error('Failed to fetch exercises:', error);
       } finally {
@@ -39,24 +43,20 @@ const AssignmentCard = ({ studentId }) => {
     fetchAssignments();
   }, [courseId]);
 
- 
   const indexOfLastAssignment = currentPage * pageSize;
   const indexOfFirstAssignment = indexOfLastAssignment - pageSize;
   const currentAssignments = assignments.slice(indexOfFirstAssignment, indexOfLastAssignment);
-
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const handleViewDetails = async(exerciseId) => {
+  const handleViewDetails = (exerciseId) => {
     navigate(`/assignmentDetail/${exerciseId}`, { state: { studentId } });
   };
 
   return (
     <div className="assignments-wrapper">
-      <Title level={2} style={{ textAlign: 'center', marginBottom: '20px' }}>Assignments</Title>
-
       {loading ? (
         <Spin tip="Loading assignments..." style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }} />
       ) : (
@@ -75,9 +75,13 @@ const AssignmentCard = ({ studentId }) => {
                   ]}
                 >
                   <Meta
-                    title={<Title level={4} style={{ margin: 0 }}>{assignment.exerciseId || 'Assignment'}</Title>}
+                    title={<Title level={4} style={{ margin: 0 }}>{assignment.description || 'Assignment'}</Title>}
                     description={
-                      <Text type="secondary">{assignment.description || 'No description available'}</Text>
+                      <>
+                        <Text type="secondary">{assignment.exerciseId || 'No Exercise ID available'}</Text>
+                        <br />
+                        <Text type="secondary">Score: {assignment.score}</Text> {/* 显示成绩 */}
+                      </>
                     }
                   />
                 </Card>
