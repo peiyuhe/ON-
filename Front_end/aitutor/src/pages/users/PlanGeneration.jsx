@@ -67,8 +67,8 @@ const StudentLearningPlan = () => {
 
   const handleUpdatePlan = async () => {
     if (!selectedPlan) return;
-
-    const { startDate, endDate } = getSystemGeneratedDates();
+    const startDate = selectedPlan.startDate;
+    const endDate = selectedPlan.endDate;
 
     const updatedPlan = {
       studentId, 
@@ -103,13 +103,12 @@ const StudentLearningPlan = () => {
 
 
   const handleCreatePlan = async () => {
-    const { startDate, endDate } = getSystemGeneratedDates();
 
     const newPlanData = {
       student: { studentId: studentId },
       planDetails: newPlan.planDetails,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: newPlan.startDate,
+      endDate: newPlan.endDate,
       completionStatus: newPlan.completionStatus || false
     };
 
