@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, Button, message, Select } from 'antd';
 import '../../styles/StudentPanel.css';
@@ -59,7 +58,9 @@ const StudentLearningReport = () => {
   const handleGenerateRecentReport = async () => {
     if (!studentId) return;
     try {
+      console.log("Begin to generate!");
       const response = await generateRecentLearningReport(studentId);
+      console.log(response.data);
       setReportData(response.data);
       message.success('Recent learning report generated successfully!');
     } catch (error) {
@@ -73,7 +74,11 @@ const StudentLearningReport = () => {
     try {
       console.log(studentId);
       console.log(selectedCourse);
+      console.log("begin to generate report by courseId!");
       const response = await generateReportByCourse(studentId, selectedCourse);
+      console.log("report details!:");
+      console.log(response);
+      console.log((response.data));
       setReportData(response.data);
       message.success('Report by course generated successfully!');
     } catch (error) {
@@ -87,7 +92,11 @@ const StudentLearningReport = () => {
     try {
       console.log(studentId);
       console.log(selectedExercise);
+      console.log("begin to generate report by exerciseId!");
       const response = await generateReportByExercise(studentId, selectedExercise);
+      console.log("report details!:");
+      console.log(response);
+      console.log((response.data));
       setReportData(response.data);
       message.success('Report by exercise generated successfully!');
     } catch (error) {
@@ -123,7 +132,7 @@ const StudentLearningReport = () => {
           Generate Recent Report
         </Button>
 
-        {/* <Select
+         <Select
           placeholder="Select Course"
           onChange={(value) => setSelectedCourse(value)}
           style={{ width: 180, marginRight: '10px', marginBottom: '10px' }}
@@ -151,7 +160,7 @@ const StudentLearningReport = () => {
         </Select>
         <Button type="primary" onClick={handleGenerateReportByExercise} disabled={!selectedExercise}>
           Generate by Exercise
-        </Button> */}
+        </Button>
 
         <Select
           placeholder="Select Language"
@@ -170,7 +179,7 @@ const StudentLearningReport = () => {
 
         <Card className="report-content" style={{ marginTop: '20px' }}>
           <h3>Report Details</h3>
-          <p><strong>Content: {reportData !== null ? reportData : "Generating……"}</strong> </p>
+          <p><strong>Content: {reportData !== null ? reportData.reportData : "Waiting for generation!"}</strong> </p>
         </Card>
     </Userlayout>
   );
