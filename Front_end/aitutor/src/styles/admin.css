@@ -1,0 +1,125 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  transform: translateX(50px);
+  /* border-bottom: 1px solid #ddd; */
+}
+
+
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+}
+
+.menu-button, .search-button, .mail-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.profile-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.user-avatar {
+  border-radius: 50%;
+}
+
+.user-details {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.user-actions {
+  display: flex;
+  gap: 10px;
+}
+
+
+
+.delete-button {
+  background: #ffdddd;
+}
+
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pagination-button {
+  background: none;
+  border: none;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination-button.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-top: 1px solid #ddd;
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 40px;
+}
+
+.footer-nav h4 {
+  margin-bottom: 10px;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: black;
+  display: block;
+  margin-bottom: 5px;
+}

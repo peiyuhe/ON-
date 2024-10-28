@@ -1,0 +1,60 @@
+/* AI Assistant 容器样式 */
+.ai-assistant-container {
+    width: 250px; /* 设置固定宽度 */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff;
+  }
+  
+  /* 标题样式 */
+  .ai-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left; /* 标题靠左对齐 */
+  }
+  
+  /* 每个选项的样式 */
+  .ai-option {
+    display: flex;
+    align-items: center;
+    padding: 15px 0; /* 增加内边距 */
+    border-top: 1px solid #eee; /* 设置上边框 */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* 设置第一个选项的上边框为 none */
+  .ai-option:first-child {
+    border-top: none;
+  }
+  
+  /* 选项悬停效果 */
+  .ai-option:hover {
+    background-color: #f9f9f9;
+  }
+  
+  /* 图标样式 */
+  .ai-icon {
+    font-size: 24px; /* 调整图标大小 */
+    margin-right: 20px; /* 图标与文字间距 */
+    color: #000; /* 修改图标颜色为黑色 */
+  }
+  
+  /* 选项文字样式 */
+  .ai-option span {
+    font-size: 16px;
+    color: #000;
+  }
+  
+  /* 分隔线样式（添加的分隔线） */
+  .ai-option:not(:last-child) {
+    margin-bottom: 10px; /* 选项之间的间距 */
+  }
+  
+  /* 设置选项之间的分隔线样式 */
+  .ai-option + .ai-option {
+    border-top: 1px solid #ddd; /* 设置每个选项的顶部边框 */
+  }
+  

@@ -1,0 +1,26 @@
+/* 教师仪表盘外部容器样式 */
+.teacher-dashboard {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  /* 左侧内容区样式 */
+  .left-content {
+    flex: 3;
+    padding: 20px;
+  }
+  
+  /* 右侧内容区样式 */
+  .right-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  /* 教师仪表盘 Header 样式 */
+  .header-container {
+    background: #e9f7ff;
+    padding: 20px 30px;
+    height: 150px;
+  }
+  

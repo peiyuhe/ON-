@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ExerciseService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.service</a>
+</div>
+
+<h1>Coverage Summary for Class: ExerciseService (com.example.springboot.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ExerciseService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.service;
+&nbsp;
+&nbsp;import com.example.springboot.model.Exercise;
+&nbsp;import com.example.springboot.repository.ExerciseRepository;
+&nbsp;import jakarta.transaction.Transactional;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class ExerciseService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ExerciseRepository exerciseRepository;
+&nbsp;
+&nbsp;
+&nbsp;    public Exercise createExercise(Exercise exercise) {
+&nbsp;
+<b class="fc">&nbsp;        return exerciseRepository.save(exercise);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Transactional
+<b class="fc">&nbsp;    public Exercise getExercise(Long exerciseId) {return exerciseRepository.findById(exerciseId).orElseThrow();}</b>
+&nbsp;
+&nbsp;
+&nbsp;    @Transactional
+&nbsp;    public Exercise updateExercise(Long exerciseId, Exercise exerciseDetail) {
+<b class="fc">&nbsp;        Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow();</b>
+&nbsp;
+<b class="fc">&nbsp;        exercise.setDueDate(exerciseDetail.getDueDate());</b>
+<b class="fc">&nbsp;        exercise.setFilePath(exerciseDetail.getFilePath());</b>
+<b class="fc">&nbsp;        exercise.setDescription(exerciseDetail.getDescription());</b>
+&nbsp;
+<b class="fc">&nbsp;        return exerciseRepository.save(exercise);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Transactional
+&nbsp;    public void deleteExercise(Long exerciseId) {
+<b class="fc">&nbsp;        Exercise exercise = exerciseRepository.findById(exerciseId).orElseThrow();</b>
+<b class="fc">&nbsp;        exerciseRepository.delete(exercise);</b>
+&nbsp;    }
+&nbsp;    public List&lt;Exercise&gt; getExercisesByCourseId(Long courseId) {
+<b class="fc">&nbsp;        return exerciseRepository.findByCourseCourseId(courseId);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

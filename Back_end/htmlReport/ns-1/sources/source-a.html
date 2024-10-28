@@ -1,0 +1,192 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > LearningReportController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: LearningReportController (com.example.springboot.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LearningReportController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (25/25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.controller;
+&nbsp;
+&nbsp;import com.example.springboot.dto.TranslateReportRequestDTO;
+&nbsp;import com.example.springboot.model.LearningReports;
+&nbsp;import com.example.springboot.service.LearningReportService;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/learning-report&quot;)
+<b class="fc">&nbsp;public class LearningReportController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private LearningReportService learningReportService;
+&nbsp;
+&nbsp;    @PostMapping(&quot;/generate-recent-report&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; generateRecentLearningReport(@RequestParam Long studentId) throws IOException {
+<b class="fc">&nbsp;        String report = learningReportService.generateLearningReport(studentId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(report);</b>
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/generate-by-course&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; generateReportByCourse(@RequestBody Map&lt;String, Long&gt; requestBody) throws IOException {
+<b class="fc">&nbsp;        Long studentId = requestBody.get(&quot;studentId&quot;);</b>
+<b class="fc">&nbsp;        Long courseId = requestBody.get(&quot;courseId&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String report = learningReportService.generateCourseLearningReport(studentId, courseId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(report);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/generate-by-exercise&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; generateReportByExercise(@RequestBody Map&lt;String, Long&gt; requestBody) throws IOException {
+<b class="fc">&nbsp;        Long studentId = requestBody.get(&quot;studentId&quot;);</b>
+<b class="fc">&nbsp;        Long exerciseId = requestBody.get(&quot;exerciseId&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        String report = learningReportService.generateExerciseLearningReport(studentId, exerciseId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(report);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @GetMapping(&quot;/view-report/{studentId}&quot;)
+&nbsp;    public ResponseEntity&lt;LearningReports&gt; viewReport(@PathVariable Long studentId) {
+<b class="fc">&nbsp;        LearningReports report = learningReportService.getReportByStudentId(studentId);</b>
+<b class="fc">&nbsp;        if (report != null) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(report);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return ResponseEntity.notFound().build();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete-report/{studentId}&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; deleteReportByStudentId(@PathVariable Long studentId) {
+<b class="fc">&nbsp;        learningReportService.deleteReportByStudentId(studentId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.noContent().build();</b>
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/translate-report&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; translateReport(@RequestBody TranslateReportRequestDTO translateReportRequestDTO) {
+<b class="fc">&nbsp;        Long reportId = translateReportRequestDTO.getReportId();</b>
+<b class="fc">&nbsp;        String targetLanguage = translateReportRequestDTO.getTargetLanguage();</b>
+&nbsp;
+<b class="fc">&nbsp;        LearningReports report = learningReportService.getReportById(reportId);</b>
+<b class="fc">&nbsp;        if (report == null) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.notFound().build();</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        String reportData = report.getReportData();</b>
+<b class="fc">&nbsp;        String translatedText = learningReportService.translateReportUsingApiKey(reportData, targetLanguage);</b>
+&nbsp;
+<b class="fc">&nbsp;        return ResponseEntity.ok(translatedText);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

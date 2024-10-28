@@ -1,0 +1,250 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > StudentController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: StudentController (com.example.springboot.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StudentController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    29.2%
+  </span>
+  <span class="absValue">
+    (14/48)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.9%
+  </span>
+  <span class="absValue">
+    (39/62)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.controller;
+&nbsp;
+&nbsp;import com.example.springboot.model.Student;
+&nbsp;import com.example.springboot.model.Submission;
+&nbsp;import com.example.springboot.model.User;
+&nbsp;import com.example.springboot.service.StudentService;
+&nbsp;import com.example.springboot.service.SubmissionService;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.security.access.prepost.PreAuthorize;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/students&quot;)
+&nbsp;public class StudentController {
+&nbsp;
+&nbsp;    private final StudentService studentService;
+&nbsp;    private SubmissionService submissionService;
+&nbsp;
+<b class="fc">&nbsp;    public StudentController(StudentService studentService) {</b>
+<b class="fc">&nbsp;        this.studentService = studentService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/create&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; createStudent(@RequestBody Map&lt;String, String&gt; request) {
+<b class="fc">&nbsp;        String username = request.get(&quot;username&quot;);</b>
+<b class="fc">&nbsp;        String password = request.get(&quot;password&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Student student = studentService.createStudent(username, password);</b>
+<b class="fc">&nbsp;        return ResponseEntity.status(201).body(Map.of(</b>
+&nbsp;                &quot;message&quot;, &quot;Student created successfully&quot;,
+<b class="fc">&nbsp;                &quot;student_id&quot;, student.getStudentId().toString()</b>
+&nbsp;        ));
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{studentId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getStudentById(@PathVariable Long studentId) {
+<b class="fc">&nbsp;        Optional&lt;Student&gt; studentOptional = studentService.getStudentById(studentId);</b>
+<b class="fc">&nbsp;        if (studentOptional.isPresent()) {</b>
+<b class="fc">&nbsp;            Student student = studentOptional.get();</b>
+<b class="fc">&nbsp;            User user = student.getUser();</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;            Map&lt;String, Object&gt; studentData = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;            studentData.put(&quot;student_id&quot;, student.getStudentId());</b>
+<b class="fc">&nbsp;            studentData.put(&quot;facility&quot;, student.getFacility());</b>
+<b class="fc">&nbsp;            studentData.put(&quot;major&quot;, student.getMajor());</b>
+&nbsp;
+&nbsp;
+<b class="pc">&nbsp;            studentData.put(&quot;username&quot;, user != null ? user.getUsername() : null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;email&quot;, user != null ? user.getEmail() : null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;phone&quot;, user != null ? user.getPhone() : null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;avatar&quot;, user != null ? user.getAvatar() : null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;birthDay&quot;, user != null ? (user.getBirthDay() != null ? user.getBirthDay().toString() : null) : null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;gender&quot;, user != null ? (user.getGender() != null ? user.getGender().name() : null) : null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;role&quot;, user != null ? (user.getRole() != null ? user.getRole().name() : null) : null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;securityQuestion&quot;, user!=null?user.getSecurityQuestion():null);</b>
+<b class="pc">&nbsp;            studentData.put(&quot;securityAnswer&quot;, user!=null?user.getSecurityAnswer():null);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;            return ResponseEntity.ok(studentData);</b>
+&nbsp;        } else {
+&nbsp;
+<b class="fc">&nbsp;            return ResponseEntity.status(404).body(Map.of(</b>
+&nbsp;                    &quot;error&quot;, &quot;Student not found&quot;
+&nbsp;            ));
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PutMapping(&quot;/update/{studentId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; updateStudent(@PathVariable Long studentId, @RequestBody Map&lt;String, String&gt; request) {
+<b class="fc">&nbsp;        String username = request.get(&quot;username&quot;);</b>
+<b class="fc">&nbsp;        String password = request.get(&quot;password&quot;);</b>
+<b class="fc">&nbsp;        String email = request.get(&quot;email&quot;);</b>
+<b class="fc">&nbsp;        String phone = request.get(&quot;phone&quot;);</b>
+<b class="fc">&nbsp;        String avatar = request.get(&quot;avatar&quot;);</b>
+<b class="fc">&nbsp;        String birthDayStr = request.get(&quot;birthDay&quot;);</b>
+<b class="fc">&nbsp;        String genderStr = request.get(&quot;gender&quot;);</b>
+<b class="fc">&nbsp;        String facility = request.get(&quot;facility&quot;);</b>
+<b class="fc">&nbsp;        String major = request.get(&quot;major&quot;);</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            studentService.updateStudent(studentId, username, password, email, phone, avatar, birthDayStr, genderStr, facility, major);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(Map.of(</b>
+&nbsp;                    &quot;message&quot;, &quot;Student updated successfully&quot;
+&nbsp;            ));
+<b class="nc">&nbsp;        } catch (RuntimeException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(404).body(Map.of(</b>
+<b class="nc">&nbsp;                    &quot;error&quot;, e.getMessage()</b>
+&nbsp;            ));
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete/{studentId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; deleteStudent(@PathVariable Long studentId) {
+&nbsp;        try {
+<b class="fc">&nbsp;            studentService.deleteStudent(studentId);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(Map.of(</b>
+&nbsp;                    &quot;message&quot;, &quot;Student deleted successfully&quot;
+&nbsp;            ));
+<b class="nc">&nbsp;        } catch (RuntimeException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(404).body(Map.of(</b>
+<b class="nc">&nbsp;                    &quot;error&quot;, e.getMessage()</b>
+&nbsp;            ));
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @GetMapping(&quot;/get/all&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getAllStudents() {
+<b class="nc">&nbsp;        List&lt;Student&gt; students = studentService.getAllStudents();</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Map&lt;String, Object&gt;&gt; studentDataList = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Student student : students) {</b>
+<b class="nc">&nbsp;            User user = student.getUser();</b>
+&nbsp;
+<b class="nc">&nbsp;            Map&lt;String, Object&gt; studentData = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;            studentData.put(&quot;student_id&quot;, student.getStudentId());</b>
+<b class="nc">&nbsp;            studentData.put(&quot;facility&quot;, student.getFacility());</b>
+<b class="nc">&nbsp;            studentData.put(&quot;major&quot;, student.getMajor());</b>
+&nbsp;
+<b class="nc">&nbsp;            studentData.put(&quot;username&quot;, user != null ? user.getUsername() : null);</b>
+<b class="nc">&nbsp;            studentData.put(&quot;email&quot;, user != null ? user.getEmail() : null);</b>
+<b class="nc">&nbsp;            studentData.put(&quot;phone&quot;, user != null ? user.getPhone() : null);</b>
+<b class="nc">&nbsp;            studentData.put(&quot;avatar&quot;, user != null ? user.getAvatar() : null);</b>
+<b class="nc">&nbsp;            studentData.put(&quot;birthDay&quot;, user != null ? (user.getBirthDay() != null ? user.getBirthDay().toString() : null) : null);</b>
+<b class="nc">&nbsp;            studentData.put(&quot;gender&quot;, user != null ? (user.getGender() != null ? user.getGender().name() : null) : null);</b>
+<b class="nc">&nbsp;            studentData.put(&quot;role&quot;, user != null ? (user.getRole() != null ? user.getRole().name() : null) : null);</b>
+&nbsp;
+<b class="nc">&nbsp;            studentDataList.add(studentData);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return ResponseEntity.ok(studentDataList);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

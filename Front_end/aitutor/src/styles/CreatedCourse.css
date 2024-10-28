@@ -1,0 +1,14 @@
+.created-course-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .upload-section, .display-section {
+    width: 45%;
+  }
+  
+  .display-section h2 {
+    margin-bottom: 20px;
+  }
+  

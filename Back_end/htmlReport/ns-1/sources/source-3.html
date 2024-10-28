@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AvatarController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: AvatarController (com.example.springboot.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AvatarController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.controller;
+&nbsp;
+&nbsp;import com.example.springboot.model.Avatar;
+&nbsp;import com.example.springboot.repository.AvatarRepository;
+&nbsp;import com.example.springboot.service.BaiduAvatarService;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/user/avatar&quot;)
+<b class="fc">&nbsp;public class AvatarController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private BaiduAvatarService baiduAvatarService;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private AvatarRepository avatarRepository;
+&nbsp;
+&nbsp;    @PostMapping(&quot;/generate&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; generateTemporaryAvatar(@RequestParam String keyword) {
+&nbsp;        try {
+&nbsp;
+<b class="fc">&nbsp;            String imageUrl = baiduAvatarService.generateTemporaryAvatar(keyword);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok( imageUrl);</b>
+<b class="fc">&nbsp;        } catch (IOException e) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(500).body(&quot;Error generating avatar: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping(&quot;/save&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; saveAvatar(@RequestParam Long userId, @RequestParam String imageUrl, @RequestParam String keyword) {
+&nbsp;
+<b class="fc">&nbsp;        String savedUrl = baiduAvatarService.saveAvatar(userId, imageUrl, keyword);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;Avatar saved successfully.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/view/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; viewAvatar(@PathVariable Long userId) {
+<b class="fc">&nbsp;        Optional&lt;Avatar&gt; avatar = baiduAvatarService.getAvatarByUserId(userId);</b>
+<b class="fc">&nbsp;        if (avatar.isPresent()) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(avatar.get());</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return ResponseEntity.status(404).body(&quot;Avatar not found for userId: &quot; + userId);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; deleteAvatar(@PathVariable Long userId) {
+<b class="fc">&nbsp;        boolean isDeleted = baiduAvatarService.deleteAvatarByUserId(userId);</b>
+<b class="fc">&nbsp;        if (isDeleted) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(&quot;Avatar deleted successfully for userId: &quot; + userId);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return ResponseEntity.status(404).body(&quot;Avatar not found for userId: &quot; + userId);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

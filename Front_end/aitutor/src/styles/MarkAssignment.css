@@ -1,0 +1,92 @@
+/* 页面容器 */
+.mark-assignment-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+  
+/* 页面标题 */
+.mark-assignment-container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+  
+/* 作业列表的项样式 */
+.ant-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 为作业名称与左边框添加内边距 */
+.ant-list-item .ant-list-item-meta-title {
+    font-size: 18px;
+    color: #333;
+    padding-left: 20px; /* 添加左边距，使文本与左边框保持距离 */
+    margin-left: auto;
+}
+  
+/* 标题 hover 效果 */
+.ant-list-item:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+  
+/* 按钮样式 */
+.ant-btn-primary {
+    background-color: #1890ff;
+    border-color: #1890ff;
+}
+  
+.ant-btn-primary:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+}
+  
+/* 弹窗中的图片样式 */
+.mark-assignment-modal img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #d9d9d9;
+}
+  
+/* 弹窗中的打分输入框样式 */
+.ant-input-number {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+  
+/* Modal 样式 */
+.mark-assignment-modal .ant-modal-content {
+    border-radius: 8px;
+}
+  
+.mark-assignment-modal .ant-modal-header {
+    background-color: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+}
+  
+.mark-assignment-modal .ant-modal-title {
+    font-size: 20px;
+    color: #333;
+}
+  
+.mark-assignment-modal .ant-modal-footer {
+    text-align: right;
+}

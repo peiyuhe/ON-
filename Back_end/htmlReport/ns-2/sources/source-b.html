@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > QianfanService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.service</a>
+</div>
+
+<h1>Coverage Summary for Class: QianfanService (com.example.springboot.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">QianfanService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.6%
+  </span>
+  <span class="absValue">
+    (43/45)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.service;
+&nbsp;import okhttp3.*;
+&nbsp;import org.json.JSONObject;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.concurrent.TimeUnit;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class QianfanService {</b>
+&nbsp;
+&nbsp;    public static final String API_KEY = &quot;8zp120frXR9nMj6byRj8xrPK&quot;;
+&nbsp;    public static final String SECRET_KEY = &quot;z70KANIwGghNdGP3V8T0KZeKxKnRbQvT&quot;;
+&nbsp;
+<b class="fc">&nbsp;    static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()</b>
+<b class="fc">&nbsp;            .connectTimeout(30, TimeUnit.SECONDS)</b>
+<b class="fc">&nbsp;            .writeTimeout(30, TimeUnit.SECONDS)</b>
+<b class="fc">&nbsp;            .readTimeout(60, TimeUnit.SECONDS)</b>
+<b class="fc">&nbsp;            .build();</b>
+&nbsp;
+&nbsp;    public String getAIAnswer(String question) throws IOException {
+<b class="fc">&nbsp;        JSONObject requestBodyJson = new JSONObject();</b>
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;temperature&quot;, 0.95);</b>
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;top_p&quot;, 0.8);</b>
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;penalty_score&quot;, 1);</b>
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;enable_system_memory&quot;, false);</b>
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;disable_search&quot;, false);</b>
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;enable_citation&quot;, false);</b>
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;response_format&quot;, &quot;text&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        JSONObject message = new JSONObject();</b>
+<b class="fc">&nbsp;        message.put(&quot;role&quot;, &quot;user&quot;);</b>
+<b class="fc">&nbsp;        message.put(&quot;content&quot;, &quot;Now you are a teaching Q&amp;A robot. You will learn relevant network information by searching and answering the questions I ask in short English. Note that the questions I ask are:\&quot;&quot; + question + &quot;\&quot;&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        requestBodyJson.put(&quot;messages&quot;, new org.json.JSONArray().put(message));</b>
+&nbsp;
+<b class="fc">&nbsp;        MediaType mediaType = MediaType.parse(&quot;application/json&quot;);</b>
+<b class="fc">&nbsp;        RequestBody body = RequestBody.create(mediaType, requestBodyJson.toString());</b>
+&nbsp;
+<b class="fc">&nbsp;        Request request = new Request.Builder()</b>
+<b class="fc">&nbsp;                .url(&quot;https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions?access_token=&quot; + getAccessToken())</b>
+<b class="fc">&nbsp;                .method(&quot;POST&quot;, body)</b>
+<b class="fc">&nbsp;                .addHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        Response response = HTTP_CLIENT.newCall(request).execute();</b>
+&nbsp;
+<b class="fc">&nbsp;        String responseBodyString = response.body().string();</b>
+<b class="fc">&nbsp;        JSONObject jsonResponse = new JSONObject(responseBodyString);</b>
+<b class="pc">&nbsp;        if (jsonResponse.has(&quot;result&quot;)) {</b>
+<b class="fc">&nbsp;            return jsonResponse.getString(&quot;result&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return &quot;AI 无法生成回答。&quot;;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getAccessToken() throws IOException {
+<b class="fc">&nbsp;        MediaType mediaType = MediaType.parse(&quot;application/x-www-form-urlencoded&quot;);</b>
+<b class="fc">&nbsp;        RequestBody body = RequestBody.create(mediaType, &quot;grant_type=client_credentials&amp;client_id=&quot; + API_KEY</b>
+&nbsp;                + &quot;&amp;client_secret=&quot; + SECRET_KEY);
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        Request request = new Request.Builder()</b>
+<b class="fc">&nbsp;                .url(&quot;https://aip.baidubce.com/oauth/2.0/token&quot;)</b>
+<b class="fc">&nbsp;                .method(&quot;POST&quot;, body)</b>
+<b class="fc">&nbsp;                .addHeader(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        Response response = HTTP_CLIENT.newCall(request).execute();</b>
+<b class="fc">&nbsp;        ResponseBody responseBody = response.body();</b>
+<b class="pc">&nbsp;        if (responseBody != null) {</b>
+<b class="fc">&nbsp;            String responseBodyString = responseBody.string();</b>
+<b class="fc">&nbsp;            JSONObject jsonResponse = new JSONObject(responseBodyString);</b>
+<b class="fc">&nbsp;            return jsonResponse.getString(&quot;access_token&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            throw new IOException(&quot;无法获取 Access Token&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

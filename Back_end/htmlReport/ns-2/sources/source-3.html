@@ -1,0 +1,272 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > BaiduAvatarService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.service</a>
+</div>
+
+<h1>Coverage Summary for Class: BaiduAvatarService (com.example.springboot.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BaiduAvatarService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    41.7%
+  </span>
+  <span class="absValue">
+    (10/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    89.2%
+  </span>
+  <span class="absValue">
+    (74/83)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.service;
+&nbsp;
+&nbsp;import com.example.springboot.model.Avatar;
+&nbsp;import com.example.springboot.repository.AvatarRepository;
+&nbsp;import okhttp3.*;
+&nbsp;import org.json.JSONArray;
+&nbsp;import org.json.JSONObject;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class BaiduAvatarService {</b>
+&nbsp;
+<b class="fc">&nbsp;    private static final OkHttpClient HTTP_CLIENT = new OkHttpClient();</b>
+&nbsp;    private static final String API_KEY = &quot;g2PaXNYM34sRPYKI3MkdCj9Z&quot;;
+&nbsp;    private static final String SECRET_KEY = &quot;vo73vtT5Weh2jYj6SurnwFMc7aRtgggD&quot;;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private AvatarRepository avatarRepository;
+&nbsp;
+&nbsp;    public String generateTemporaryAvatar(String keyword) throws IOException {
+<b class="fc">&nbsp;        String taskId = submitAvatarRequest(keyword);</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            Thread.sleep(20000);</b>
+<b class="nc">&nbsp;        } catch (InterruptedException e) {</b>
+<b class="nc">&nbsp;            Thread.currentThread().interrupt();</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        String imageUrl = queryAvatarResult(taskId);</b>
+<b class="fc">&nbsp;        return imageUrl;</b>
+&nbsp;    }
+&nbsp;    public String saveAvatar(Long userId, String imageUrl, String keyword) {
+<b class="fc">&nbsp;        Avatar existingAvatar = avatarRepository.findByUserId(userId);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (existingAvatar == null) {</b>
+<b class="fc">&nbsp;            Avatar newAvatar = new Avatar();</b>
+<b class="fc">&nbsp;            newAvatar.setUserId(userId);</b>
+<b class="fc">&nbsp;            newAvatar.setAvatarKeyword(keyword);</b>
+<b class="fc">&nbsp;            newAvatar.setAvatarData(imageUrl);</b>
+<b class="fc">&nbsp;            avatarRepository.save(newAvatar);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            existingAvatar.setAvatarKeyword(keyword);</b>
+<b class="fc">&nbsp;            existingAvatar.setAvatarData(imageUrl);</b>
+<b class="fc">&nbsp;            avatarRepository.save(existingAvatar);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return imageUrl;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    String submitAvatarRequest(String keyword) throws IOException {
+<b class="fc">&nbsp;        String accessToken = getAccessToken();</b>
+<b class="fc">&nbsp;        String apiUrl = &quot;https://aip.baidubce.com/rpc/2.0/wenxin/v1/basic/textToImage?access_token=&quot; + accessToken;</b>
+&nbsp;
+<b class="fc">&nbsp;        JSONObject json = new JSONObject();</b>
+<b class="fc">&nbsp;        json.put(&quot;text&quot;, keyword);</b>
+<b class="fc">&nbsp;        json.put(&quot;resolution&quot;, &quot;512*512&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        RequestBody body = RequestBody.create(json.toString(), MediaType.parse(&quot;application/json&quot;));</b>
+<b class="fc">&nbsp;        Request request = new Request.Builder()</b>
+<b class="fc">&nbsp;                .url(apiUrl)</b>
+<b class="fc">&nbsp;                .post(body)</b>
+<b class="fc">&nbsp;                .addHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)</b>
+<b class="fc">&nbsp;                .addHeader(&quot;Accept&quot;, &quot;application/json&quot;)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;
+<b class="pc">&nbsp;        try (Response response = HTTP_CLIENT.newCall(request).execute()) {</b>
+<b class="pc">&nbsp;            if (!response.isSuccessful()) {</b>
+<b class="nc">&nbsp;                throw new IOException(&quot;Unexpected code &quot; + response);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            String responseBody = response.body().string();</b>
+<b class="fc">&nbsp;            JSONObject responseJson = new JSONObject(responseBody);</b>
+&nbsp;
+<b class="fc">&nbsp;            JSONObject dataObject = responseJson.getJSONObject(&quot;data&quot;);</b>
+<b class="fc">&nbsp;            long taskId = dataObject.getLong(&quot;taskId&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            return String.valueOf(taskId);</b>
+<b class="pc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    String queryAvatarResult(String taskId) throws IOException {
+<b class="fc">&nbsp;        String accessToken = getAccessToken();</b>
+<b class="fc">&nbsp;        String apiUrl = &quot;https://aip.baidubce.com/rpc/2.0/wenxin/v1/basic/getImg?access_token=&quot; + accessToken;</b>
+&nbsp;
+<b class="fc">&nbsp;        JSONObject json = new JSONObject();</b>
+<b class="fc">&nbsp;        json.put(&quot;taskId&quot;, taskId);</b>
+&nbsp;
+<b class="fc">&nbsp;        RequestBody body = RequestBody.create(json.toString(), MediaType.parse(&quot;application/json&quot;));</b>
+<b class="fc">&nbsp;        Request request = new Request.Builder()</b>
+<b class="fc">&nbsp;                .url(apiUrl)</b>
+<b class="fc">&nbsp;                .post(body)</b>
+<b class="fc">&nbsp;                .addHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)</b>
+<b class="fc">&nbsp;                .addHeader(&quot;Accept&quot;, &quot;application/json&quot;)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;
+<b class="pc">&nbsp;        try (Response response = HTTP_CLIENT.newCall(request).execute()) {</b>
+<b class="pc">&nbsp;            if (!response.isSuccessful()) {</b>
+<b class="nc">&nbsp;                throw new IOException(&quot;Unexpected code &quot; + response);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            String responseBody = response.body().string();</b>
+<b class="fc">&nbsp;            JSONObject responseJson = new JSONObject(responseBody);</b>
+&nbsp;
+<b class="fc">&nbsp;            JSONObject data = responseJson.getJSONObject(&quot;data&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            JSONArray imgUrls = data.getJSONArray(&quot;imgUrls&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (!imgUrls.isEmpty()) {</b>
+<b class="nc">&nbsp;                return imgUrls.getJSONObject(0).getString(&quot;image&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                throw new IOException(&quot;No image URL found in the response&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private String getAccessToken() throws IOException {
+<b class="fc">&nbsp;        String apiUrl = &quot;https://aip.baidubce.com/oauth/2.0/token&quot;;</b>
+<b class="fc">&nbsp;        String credentials = &quot;grant_type=client_credentials&amp;client_id=&quot; + API_KEY + &quot;&amp;client_secret=&quot; + SECRET_KEY;</b>
+<b class="fc">&nbsp;        RequestBody body = RequestBody.create(credentials, MediaType.parse(&quot;application/x-www-form-urlencoded&quot;));</b>
+&nbsp;
+<b class="fc">&nbsp;        Request request = new Request.Builder()</b>
+<b class="fc">&nbsp;                .url(apiUrl)</b>
+<b class="fc">&nbsp;                .post(body)</b>
+<b class="fc">&nbsp;                .addHeader(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;
+<b class="pc">&nbsp;        try (Response response = HTTP_CLIENT.newCall(request).execute()) {</b>
+<b class="pc">&nbsp;            if (!response.isSuccessful()) {</b>
+<b class="nc">&nbsp;                throw new IOException(&quot;Failed to get access token&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            String responseBody = response.body().string();</b>
+<b class="fc">&nbsp;            JSONObject responseJson = new JSONObject(responseBody);</b>
+<b class="fc">&nbsp;            return responseJson.getString(&quot;access_token&quot;);</b>
+<b class="pc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Optional&lt;Avatar&gt; getAvatarByUserId(Long userId) {
+<b class="fc">&nbsp;        return Optional.ofNullable(avatarRepository.findByUserId(userId));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean deleteAvatarByUserId(Long userId) {
+<b class="fc">&nbsp;        Optional&lt;Avatar&gt; avatar = Optional.ofNullable(avatarRepository.findByUserId(userId));</b>
+<b class="fc">&nbsp;        if (avatar.isPresent()) {</b>
+<b class="fc">&nbsp;            avatarRepository.delete(avatar.get());</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

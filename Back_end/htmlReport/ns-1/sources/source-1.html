@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AdminController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: AdminController (com.example.springboot.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AdminController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (26/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.controller;
+&nbsp;
+&nbsp;import com.example.springboot.model.Admin;
+&nbsp;import com.example.springboot.service.AdminService;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.security.access.prepost.PreAuthorize;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/admins&quot;)
+&nbsp;public class AdminController {
+&nbsp;
+&nbsp;    private final AdminService adminService;
+&nbsp;
+<b class="fc">&nbsp;    public AdminController(AdminService adminService) {</b>
+<b class="fc">&nbsp;        this.adminService = adminService;</b>
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/create&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; createAdmin(@RequestBody Map&lt;String, String&gt; request) {
+<b class="fc">&nbsp;        String username = request.get(&quot;username&quot;);</b>
+<b class="fc">&nbsp;        String password = request.get(&quot;password&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        Admin admin = adminService.createAdmin(username, password);</b>
+<b class="fc">&nbsp;        return ResponseEntity.status(201).body(Map.of(</b>
+&nbsp;                &quot;message&quot;, &quot;admin created successfully&quot;,
+<b class="fc">&nbsp;                &quot;admin_id&quot;, admin.getAdminId().toString()</b>
+&nbsp;        ));
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{adminId}&quot;)
+&nbsp;    @PreAuthorize(&quot;isAuthenticated()&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getAdminById(@PathVariable Long adminId) {
+<b class="fc">&nbsp;        Optional&lt;Admin&gt; adminOptional = adminService.getAdminById(adminId);</b>
+<b class="fc">&nbsp;        if (adminOptional.isPresent()) {</b>
+<b class="fc">&nbsp;            Admin admin = adminOptional.get();</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(Map.of(</b>
+<b class="fc">&nbsp;                    &quot;admin_id&quot;, admin.getAdminId().toString(),</b>
+<b class="fc">&nbsp;                    &quot;username&quot;, admin.getUser().getUsername()</b>
+&nbsp;            ));
+&nbsp;        } else {
+<b class="fc">&nbsp;            return ResponseEntity.status(404).body(Map.of(</b>
+&nbsp;                    &quot;error&quot;, &quot;Admin not found&quot;
+&nbsp;            ));
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/update/{adminId}&quot;)
+&nbsp;    @PreAuthorize(&quot;isAuthenticated()&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; updateAdmin(@PathVariable Long adminId, @RequestBody Map&lt;String, String&gt; request) {
+<b class="fc">&nbsp;        String username = request.get(&quot;username&quot;);</b>
+<b class="fc">&nbsp;        String password = request.get(&quot;password&quot;);</b>
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            adminService.updateAdmin(adminId, username, password);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(Map.of(</b>
+&nbsp;                    &quot;message&quot;, &quot;Admin updated successfully&quot;
+&nbsp;            ));
+<b class="fc">&nbsp;        } catch (RuntimeException e) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(404).body(Map.of(</b>
+<b class="fc">&nbsp;                    &quot;error&quot;, e.getMessage()</b>
+&nbsp;            ));
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete/{adminId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; deleteAdmin(@PathVariable Long adminId) {
+&nbsp;        try {
+<b class="fc">&nbsp;            adminService.deleteAdmin(adminId);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(Map.of(</b>
+&nbsp;                    &quot;message&quot;, &quot;Admin deleted successfully&quot;
+&nbsp;            ));
+<b class="fc">&nbsp;        } catch (RuntimeException e) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(404).body(Map.of(</b>
+<b class="fc">&nbsp;                    &quot;error&quot;, e.getMessage()</b>
+&nbsp;            ));
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+/* 定义 Footer 容器样式 */
+.footer-container {
+    background-color: #ffffff; /* 设置整体背景色为白色 */
+  }
+  
+  /* 定义浅灰色分割线样式 */
+  .footer-divider {
+    height: 1px;
+    background-color: #e0e0e0; /* 设置分割线为浅灰色 */
+    margin: 0 20px; /* 给分割线设置左右外边距 */
+  }
+  
+  /* 自定义 rc-footer 样式 */
+  .custom-footer .rc-footer-container {
+    color: #000000 !important; /* 设置所有文本颜色为黑色 */
+  }
+  
+  .custom-footer a {
+    color: #000000 !important; /* 设置所有链接颜色为黑色 */
+  }
+  
+  .custom-footer .rc-footer-column-title {
+    color: #000000 !important; /* 设置列标题的颜色 */
+  }
+  
+  .custom-footer .rc-footer-bottom {
+    border-top: none; /* 移除底部边框 */
+  }
+  

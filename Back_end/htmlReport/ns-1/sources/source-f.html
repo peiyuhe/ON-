@@ -1,0 +1,259 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > UserController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: UserController (com.example.springboot.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    81.8%
+  </span>
+  <span class="absValue">
+    (9/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (2/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39.2%
+  </span>
+  <span class="absValue">
+    (20/51)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.controller;
+&nbsp;import com.example.springboot.model.User;
+&nbsp;import com.example.springboot.dto.SecuritySetupDTO;
+&nbsp;import com.example.springboot.service.UserService;
+&nbsp;import org.springframework.core.io.Resource;
+&nbsp;import org.springframework.http.HttpHeaders;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.MediaType;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.springframework.web.multipart.MultipartFile;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.IOException;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.nio.file.Path;
+&nbsp;import java.nio.file.Paths;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/user&quot;)
+&nbsp;public class UserController {
+&nbsp;
+&nbsp;    private final UserService userService;
+&nbsp;
+<b class="fc">&nbsp;    public UserController(UserService userService) {</b>
+<b class="fc">&nbsp;        this.userService = userService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/check-security/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; checkSecurityQuestion(@PathVariable Long userId) {
+<b class="fc">&nbsp;        boolean isSet = userService.hasSetSecurityQuestion(userId);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (isSet) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(&quot;Security question is already set.&quot;);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(&quot;Please set your security question.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping(&quot;/set-security-question&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; setSecurityQuestion(@RequestBody SecuritySetupDTO securitySetupDTO) {
+<b class="fc">&nbsp;        String response = userService.setSecurityQuestion(securitySetupDTO);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(response);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @PutMapping(&quot;/update-security-question/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; updateSecurityQuestion(@PathVariable Long userId, @RequestBody SecuritySetupDTO securitySetupDTO) {
+&nbsp;        try {
+<b class="fc">&nbsp;            String response = userService.updateSecurityQuestion(userId, securitySetupDTO);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(response);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;Error updating security question: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete-security-question/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; deleteSecurityQuestion(@PathVariable Long userId) {
+&nbsp;        try {
+<b class="fc">&nbsp;            String response = userService.deleteSecurityQuestion(userId);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(response);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;Error deleting security question: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping(&quot;/upload-avatar/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; uploadAvatar(@PathVariable Long userId, @RequestParam(&quot;file&quot;) MultipartFile file) {
+&nbsp;        try {
+&nbsp;            // 调用 UserService 中的 uploadAvatar 方法
+<b class="fc">&nbsp;            String avatarUrl = userService.uploadAvatar(userId, file);</b>
+&nbsp;
+<b class="fc">&nbsp;            return ResponseEntity.ok(&quot;Avatar uploaded successfully: &quot; + avatarUrl);</b>
+<b class="nc">&nbsp;        } catch (IllegalArgumentException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.badRequest().body(&quot;Invalid file type: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;Error uploading avatar: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/download-avatar/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;Resource&gt; downloadAvatar(@PathVariable Long userId, @RequestParam(&quot;filePath&quot;) String filePath) {
+&nbsp;        try {
+<b class="nc">&nbsp;            Resource resource = userService.downloadAvatar(userId, filePath);</b>
+<b class="nc">&nbsp;            String contentType = Files.probeContentType(resource.getFile().toPath());</b>
+<b class="nc">&nbsp;            if (contentType == null) {</b>
+<b class="nc">&nbsp;                contentType = &quot;application/octet-stream&quot;;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            return ResponseEntity.ok()</b>
+<b class="nc">&nbsp;                    .contentType(MediaType.parseMediaType(contentType))</b>
+<b class="nc">&nbsp;                    .header(HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=\&quot;&quot; + resource.getFilename() + &quot;\&quot;&quot;)</b>
+<b class="nc">&nbsp;                    .body(resource);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</b>
+<b class="nc">&nbsp;                    .body(null);</b>
+<b class="nc">&nbsp;        } catch (RuntimeException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PutMapping(&quot;/update-avatar/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; updateAvatar(@PathVariable Long userId, @RequestParam(&quot;file&quot;) MultipartFile file) {
+&nbsp;        try {
+<b class="nc">&nbsp;            String avatarUrl = userService.uploadAvatar(userId, file);</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(&quot;Avatar updated successfully: &quot; + avatarUrl);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;Error updating avatar: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete-avatar/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; deleteAvatar(@PathVariable Long userId) {
+&nbsp;        try {
+<b class="fc">&nbsp;            String response = userService.deleteAvatar(userId);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(response);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;Error deleting avatar: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/get-avatar/{userId}&quot;)
+&nbsp;    public ResponseEntity&lt;String&gt; getAvatar(@PathVariable Long userId) {
+&nbsp;        try {
+<b class="fc">&nbsp;            String avatarUrl = userService.getAvatar(userId);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(avatarUrl);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;Error retrieving avatar: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @GetMapping(&quot;/{username}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getUserByUsername(@PathVariable String username) {
+&nbsp;        try {
+<b class="fc">&nbsp;            Optional&lt;User&gt; user = userService.getUserByUsername(username);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(user);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(404).body(&quot;Error: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>

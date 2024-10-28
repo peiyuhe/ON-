@@ -1,0 +1,44 @@
+/* Navbar 样式 */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* 左右两侧对齐 */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff; /* 设置导航栏背景色 */
+    border: 1px solid #e0e0e0; /* 边框颜色与大小 */
+  }
+  
+  /* 左侧 Logo 样式 */
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* 右侧导航链接样式 */
+  .navbar-links {
+    display: flex;
+  }
+  
+  .nav-link {
+    margin: 0 15px; /* 每个链接之间的间距 */
+    text-decoration: none; /* 去除链接下划线 */
+    color: #333; /* 链接文本颜色 */
+    font-size: 16px; /* 链接字体大小 */
+    font-weight: 500; /* 链接字体粗细 */
+  }
+  
+  .nav-link:hover {
+    color: #000; /* 鼠标悬停时链接颜色 */
+  }
+  
+  .active {
+    background-color: #f0f0f0; /* 当前选中的链接背景颜色 */
+    border-radius: 4px; /* 圆角样式 */
+    padding: 5px 10px; /* 当前选中链接的内边距 */
+  }
+  

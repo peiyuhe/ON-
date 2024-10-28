@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+  }
+  
+  .dashboard {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    background-color: #eef3f7;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .avatar {
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .profile-info {
+    text-align: left;
+  }
+  
+  .profile-info h2 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .profile-info p {
+    margin: 5px 0;
+  }
+  
+  .edit-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .content {
+    width: 60%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .tabs {
+    display: flex;
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    border-bottom: 2px solid #d0d3d7;
+  }
+  
+  .tab.active {
+    border-bottom: 2px solid #4caf50;
+    font-weight: bold;
+  }
+  
+  .materials {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .learning-material {
+    width: 22%;
+    text-align: center;
+  }
+  
+  .material-thumbnail img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .view-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .prev-button,
+  .next-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .page-info {
+    line-height: 30px;
+  }
+  
+  .ai-options {
+    width: 200px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .ai-options h3 {
+    margin: 0 0 10px;
+  }
+  
+  .ai-options ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .ai-options li {
+    margin: 5px 0;
+    cursor: pointer;
+  }
+  
+  .summary {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 20px auto;
+  }
+  
+  .summary-item {
+    background-color: #eef3f7;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: 45%;
+  }
+  

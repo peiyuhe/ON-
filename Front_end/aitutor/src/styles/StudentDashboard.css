@@ -1,0 +1,14 @@
+.student-dashboard {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .left-content {
+    flex: 3;
+  }
+  
+  .right-content {
+    flex: 1;
+  }
+  

@@ -1,0 +1,59 @@
+.materials-wrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.materials-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+  
+.material-card {
+    width: 300px;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.2s;
+}
+  
+.material-card:hover {
+    transform: scale(1.05);
+}
+  
+.material-title h4 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+  
+.material-description {
+    font-size: 14px;
+    margin: 10px 0;
+}
+  
+.view-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 80%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.view-button:hover {
+    background-color: #0056b3;
+}
+  
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}

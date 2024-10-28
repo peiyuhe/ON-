@@ -1,0 +1,55 @@
+  .tab-switcher {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    margin: auto;
+  }
+  
+  .tab-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .tab-button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    border-bottom: 2px solid transparent;
+  }
+  .create-button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-bottom: 2px solid transparent;
+    margin-left: auto; /* 将按钮推到右边 */
+    font-weight: bold;
+    color: #121212;
+    border:#007bff;
+    /* border-radius: 5px; */
+    padding: 10px 20px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .tab-button.active {
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+    transition: border-bottom 0.3s ease-in-out;
+  }
+  
+  .tab-content {
+    padding: 20px;
+  }
+  
+  .create-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  

@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ForumController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springboot.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: ForumController (com.example.springboot.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ForumController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86.7%
+  </span>
+  <span class="absValue">
+    (13/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springboot.controller;
+&nbsp;
+&nbsp;import com.example.springboot.dto.PostQuestionDTO;
+&nbsp;import com.example.springboot.model.Forum;
+&nbsp;import com.example.springboot.service.ForumService;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.security.access.prepost.PreAuthorize;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/forums&quot;)
+<b class="fc">&nbsp;public class ForumController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ForumService forumService;
+&nbsp;
+&nbsp;    @PostMapping(&quot;/create&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; createForum(@RequestBody Forum forum) {
+<b class="fc">&nbsp;        forumService.createForum(forum);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;Forum post created successfully&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/update/{forumId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; updateForum(@PathVariable Long forumId, @RequestBody Forum forumDetails) {
+<b class="fc">&nbsp;        forumService.updateForum(forumId, forumDetails);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;Forum post updated successfully&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/delete/{forumId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; deleteForum(@PathVariable Long forumId) {
+<b class="fc">&nbsp;        forumService.deleteForum(forumId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(&quot;Forum post deleted successfully&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{forumId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getForum(@PathVariable Long forumId) {
+<b class="fc">&nbsp;        Forum forum = forumService.getForum(forumId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(forum);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/student/{studentId}&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getForumsByStudent(@PathVariable Long studentId) {
+<b class="fc">&nbsp;        List&lt;Forum&gt; forums = forumService.getForumsByStudent(studentId);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(forums);</b>
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/post-question&quot;)
+&nbsp;    public ResponseEntity&lt;Forum&gt; postQuestion(@RequestBody PostQuestionDTO request) throws IOException {
+<b class="fc">&nbsp;        Forum forum = forumService.postQuestion(request);</b>
+<b class="fc">&nbsp;        return ResponseEntity.ok(forum);</b>
+&nbsp;    }
+&nbsp;    @GetMapping(&quot;/get/all&quot;)
+&nbsp;    public ResponseEntity&lt;?&gt; getAllForums() {
+<b class="nc">&nbsp;        List&lt;Forum&gt; forums = forumService.getAllForums();</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(forums);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-10-27 18:12</div>
+</div>
+</body>
+</html>
