@@ -98,7 +98,7 @@ const StudentOnlineForum = () => {
     if (!hasError) {
       // If no error, proceed with the submission
       console.log("Question Submitted:", newQuestion);
-      const request = await PostQuestion(2, 1, question);
+      const request = await PostQuestion(1, 1, question);
       console.log(request.data);
       setAiAnswer(request.data);
       closeModal();  // Close the modal after submission

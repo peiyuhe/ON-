@@ -190,7 +190,7 @@ export const getUnmarkedAssignments = (exerciseId) => {
 export const PostQuestion = (studentId, courseId, question) => {
   return api.post('/forums/post-question',
     {
-      studentId: 2,
+      studentId: 1,
       courseId: 1,
       question: question
     });

@@ -179,7 +179,7 @@ const StudentLearningReport = () => {
 
         <Card className="report-content" style={{ marginTop: '20px' }}>
           <h3>Report Details</h3>
-          <p><strong>Content: {reportData !== null ? reportData.reportData : "Waiting for generation!"}</strong> </p>
+          <p><strong>Content: {reportData !== null ? (reportData.reportData || reportData) : "Waiting for generation!"}</strong> </p>
         </Card>
     </Userlayout>
   );
