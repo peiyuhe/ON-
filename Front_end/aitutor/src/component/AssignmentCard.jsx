@@ -80,7 +80,7 @@ const AssignmentCard = ({ studentId }) => {
                       <>
                         <Text type="secondary">{assignment.exerciseId || 'No Exercise ID available'}</Text>
                         <br />
-                        <Text type="secondary">Score: {assignment.score}</Text> {/* 显示成绩 */}
+                        {/* <Text type="secondary">Score: {assignment.score}</Text> 显示成绩 */}
                       </>
                     }
                   />

@@ -114,7 +114,7 @@ const TabSwitcherUser = ({ searchText }) => {
                 key={user.user_Id}
                 username={user.username}
                 role={user.role}
-                avatar={user.avatar}
+                avatar={user.avatar || 'https://via.placeholder.com/50'}
                 user_Id={user.user_Id}
                 onDelete={() => showDeleteModal(user)} 
               />

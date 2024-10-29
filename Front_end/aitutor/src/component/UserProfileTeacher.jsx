@@ -57,7 +57,7 @@ const UserProfileTeacher = () => {
     <div className="user-profile-container">
       <Row gutter={[16, 16]}>
         <Col span={8}>
-          <img src={`${baseUrl}${user.avatar}` || 'https://via.placeholder.com/50'} alt="User Avatar" className="user-avatar" />
+          <img src={`${user.avatar}` || 'https://via.placeholder.com/50'} alt="User Avatar" className="user-avatar" />
         </Col>
         <Col span={8}>
           <div className="user-details">

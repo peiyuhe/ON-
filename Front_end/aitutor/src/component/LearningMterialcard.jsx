@@ -70,7 +70,7 @@ const LearningMaterialCard = () => {
 
   return (
     <div className="materials-wrapper">
-      <Title level={2} style={{ textAlign: 'center', marginBottom: '20px' }}>Learning Materials</Title>
+      {/* <Title level={2} style={{ textAlign: 'center', marginBottom: '20px' }}>Learning Materials</Title> */}
       <div className="materials-container">
         <Space direction="horizontal" wrap size="large" style={{ display: 'flex', justifyContent: 'center' }}>
           {currentMaterials.length > 0 ? (

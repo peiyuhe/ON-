@@ -82,7 +82,7 @@ const Homepage = () => {
             <div className="user-info">
               <Card className="user-info-card">
                 <div className="avatar">
-                <img src={`${baseUrl}${avatar}` || 'https://via.placeholder.com/50'}  className="avatar-image" />
+                <img src={`${avatar}` || 'https://via.placeholder.com/50'}  className="avatar-image" />
                 </div>
                 <h3>{username}</h3>
                 <p>{role}</p>

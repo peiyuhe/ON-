@@ -116,7 +116,7 @@ const StudentLearningReport = () => {
       console.log(translateRequestDTO);
       const response = await translateReport(translateRequestDTO);
       setReportData(response.data); 
-      message.success(`Report translated successfully: ${response.data}`);
+      message.success(`Report translated successfully!`);
     } catch (error) {
       console.error(error);
       message.error('Failed to translate report.');
